@@ -2,13 +2,17 @@
   "name": "simp-simp_ad",
   "version": "0.0.1",
   "author": "simp",
-  "summary": "Puppet module for managing simp_ad server and client",
+  "summary": "Puppet module for automating joining AD domains",
   "license": "Apache-2.0",
   "source": "https://github.com/simp/pupmod-simp-simp_ad",
   "project_page": "https://github.com/simp/pupmod-simp-simp_ad",
   "issues_url": "https://simp-project.atlassian.net",
   "tags": [
-    "simp"
+    "simp",
+    "realm",
+    "realmd",
+    "adcli",
+    "ad"
   ],
   "dependencies": [
     {

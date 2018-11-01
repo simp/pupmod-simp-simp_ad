@@ -60,55 +60,24 @@
 #
 class simp_ad::client::install (
   Enum['present','absent']           $ensure,
-  Optional[Simplib::Hostname]        $hostname   = undef,
-  Optional[String]                   $password   = undef,
-  Optional[String]                   $principal  = undef,
-  Optional[Simplib::Hostname]        $domain     = undef,
-  Optional[String]                   $realm      = undef,
-  Optional[Array[Simplib::Hostname]] $server     = undef,
-  Optional[Array[Simplib::Host]]     $ntp_server = undef,
-  Optional[Array[Simplib::IP]]       $ip_address = undef,
-  Boolean                            $no_ac      = true,
+  Optional[Array[Simplib::Hostname]] $server          = undef,
   Hash                               $install_options = {},
   String $ipa_client_ensure  = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
   String $admin_tools_ensure = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
 ) {
   contain 'simp_ad::client::packages'
 
-  if $domain and $ensure == 'present' {
-    if $facts['ipa'] {
-      if $facts['ipa']['domain'] != $domain {
-        fail("simp_ad::client::install: This host is already a member of domain ${facts['ipa']['domain']}, cannot join domain ${domain}")
-      }
-    }
-  }
-
-
-  # assemble important options into hash, then remove ones that are undef
-  # all of these options require a value
-  $opts = {
-    'password'   => $password,
-    'principal'  => $principal,
-    'server'     => $server,
-    'ip-address' => $ip_address,
-    'domain'     => $domain,
-    'realm'      => $realm,
-    'hostname'   => $hostname,
-  }.delete_undef_values
-
-  $_no_ac = $no_ac ? { true => { 'noac'  => undef }, default => {} }
-
   # convert the hash into a string
   $expanded_options = simplib::hash_to_opts(
-    ($install_options + $_no_ac + $opts),
+    $install_options,
     { 'repeat' => 'repeat' }
   )
 
 
   if $ensure == 'present' {
-    unless $facts['ipa'] {
-      exec { 'ipa-client-install install':
-        command   => strip("ipa-client-install --unattended ${expanded_options}"),
+    unless $facts['active_directory'] {
+      exec { 'realm join':
+        command   => strip("realm join --unattended ${expanded_options}"),
         logoutput => true,
         path      => ['/sbin','/usr/sbin'],
         require   => Class['simp_ad::client::packages']
@@ -116,16 +85,11 @@ class simp_ad::client::install (
     }
   }
   else {
-    exec { 'ipa-client-install uninstall':
-      command   => 'ipa-client-install --unattended --uninstall',
+    exec { 'realm leave':
+      command   => 'realm leave --unattended',
       logoutput => true,
       path      => ['/sbin','/usr/sbin'],
       require   => Class['simp_ad::client::packages'],
-      notify    => Reboot_notify['ipa-client-unstall uninstall']
-    }
-    # you might not have to do this
-    reboot_notify { 'ipa-client-unstall uninstall':
-      reason => 'simp_ad::client::install: removed host from IPA domain'
     }
   }
 }

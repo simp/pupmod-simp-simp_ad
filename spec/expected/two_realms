@@ -1,0 +1,28 @@
+test.case
+  type: kerberos
+  realm-name: TEST.CASE
+  domain-name: test.case
+  configured: kerberos-member
+  server-software: active-directory
+  client-software: sssd
+  required-package: oddjob
+  required-package: oddjob-mkhomedir
+  required-package: sssd
+  required-package: adcli
+  required-package: samba-common-tools
+  login-formats: %U@test.case
+  login-policy: allow-realm-logins
+test2.case
+  type: kerberos
+  realm-name: TEST2.CASE
+  domain-name: test2.case
+  configured: kerberos-member
+  server-software: active-directory
+  client-software: sssd
+  required-package: oddjob
+  required-package: oddjob-mkhomedir
+  required-package: sssd
+  required-package: adcli
+  required-package: samba-common-tools
+  login-formats: %U@test2.case
+  login-policy: allow-realm-logins
