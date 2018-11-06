@@ -1,16 +1,14 @@
-# Return a hash of the output of ``realm list``
+# Return a hash of the output of ``realm list``, if the realm command exists
 #
 Facter.add(:active_directory) do
+  has_weight 100
+
   confine :kernel => 'Linux'
 
   realm = Facter::Core::Execution.which('realm')
   confine { realm }
 
-  setcode do
-    # domain   = Facter.value(:domain)
-    # response = Facter::Core::Execution.exec("#{realm} list -v #{domain}")
-    response = Facter::Core::Execution.exec("#{realm} list")
-
+  def parse_realm(response)
     domains = {}
     domain_name = nil
     domain_data = {}
@@ -25,6 +23,12 @@ Facter.add(:active_directory) do
       domains[domain_name] = domain_data
     end
 
-    domains
+    domains.compact
+  end
+
+  setcode do
+    response = Facter::Core::Execution.exec("#{realm} list")
+
+    parse_realm(response)
   end
 end

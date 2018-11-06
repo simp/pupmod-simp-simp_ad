@@ -1,0 +1,11 @@
+[domain]
+domain-name = test.case
+domain-short = TEST
+domain-forest = test.case
+domain-controller = ad.test.case
+domain-controller-site = Default-First-Site-Name
+domain-controller-flags = pdc gc ldap ds kdc timeserv closest writable good-timeserv full-secret ads-web
+domain-controller-usable = yes
+domain-controllers = ad.test.case
+[computer]
+computer-site = Default-First-Site-Name
