@@ -1,0 +1,45 @@
+---
+domain: test.case
+status: connected
+realm:
+  test.case:
+    client-software: sssd
+    configured: kerberos-member
+    domain-name: test.case
+    login-formats: "%U@test.case"
+    login-policy: allow-realm-logins
+    realm-name: TEST.CASE
+    required-package:
+    - oddjob
+    - oddjob-mkhomedir
+    - sssd
+    - adcli
+    - samba-common-tools
+    server-software: active-directory
+    type: kerberos
+  test2.case:
+    client-software: sssd
+    configured: kerberos-member
+    domain-name: test2.case
+    login-formats: "%U@test2.case"
+    login-policy: allow-realm-logins
+    realm-name: TEST2.CASE
+    required-package:
+    - oddjob
+    - oddjob-mkhomedir
+    - sssd
+    - adcli
+    - samba-common-tools
+    server-software: active-directory
+    type: kerberos
+adcli:
+  test.case:
+    computer-site: Default-First-Site-Name
+    domain-controller: ad.test.case
+    domain-controller-flags: pdc gc ldap ds kdc timeserv closest writable good-timeserv
+      full-secret ads-web
+    domain-controller-site: Default-First-Site-Name
+    domain-controller-usable: 'yes'
+    domain-controllers: ad.test.case
+    domain-forest: test.case
+    domain-short: TEST

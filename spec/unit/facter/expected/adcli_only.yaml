@@ -1,0 +1,15 @@
+---
+domain: test.case
+status: connected
+realm: {}
+adcli:
+  test.case:
+    computer-site: Default-First-Site-Name
+    domain-controller: ad.test.case
+    domain-controller-flags: pdc gc ldap ds kdc timeserv closest writable good-timeserv
+      full-secret ads-web
+    domain-controller-site: Default-First-Site-Name
+    domain-controller-usable: 'yes'
+    domain-controllers: ad.test.case
+    domain-forest: test.case
+    domain-short: TEST
