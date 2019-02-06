@@ -6,12 +6,10 @@ def yaml_load(file)
 end
 
 describe 'active_directory' do
+# describe Facter::Util::Fact do
   before :each do
     Facter.clear
-    Facter.reset
-    # Facter.flush
-    Facter.fact(:value).expects(:domain).returns('test.case')
-    # let(:facts) {{ 'domain' => 'test.case' }}
+    Facter.fact(:domain).stubs(:value).returns('test.case')
     Facter::Core::Execution.expects(:exec).with('uname -s').returns('Linux')
   end
 

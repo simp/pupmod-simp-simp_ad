@@ -1,0 +1,14 @@
+{
+  "description": "Leave an AD domain",
+  "parameters": {
+    "domain": {
+      "description": "The domain that is being left",
+      "type": "Optional[String]"
+    },
+    "options": {
+      "description": "Other command line options from `realm leave`, specified as an arguments string",
+      "type": "Optional[String]"
+    }
+  },
+  "files": ["ruby_task_helper/files/task_helper.rb"]
+}

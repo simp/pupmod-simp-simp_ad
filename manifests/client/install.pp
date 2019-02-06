@@ -59,13 +59,22 @@
 #   package. Only applicable on EL6.
 #
 class simp_ad::client::install (
-  Enum['present','absent']           $ensure,
-  Optional[Array[Simplib::Hostname]] $server          = undef,
-  Hash                               $install_options = {},
-  String $ipa_client_ensure  = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
-  String $admin_tools_ensure = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
+  Enum['present','absent']    $ensure,
+  Optional[Simplib::Hostname] $server          = undef,
+  Hash                        $install_options = {},
+  String $samba_ensure  = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
+  String $realmd_ensure = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
+  String $adcli_ensure  = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
 ) {
-  contain 'simp_ad::client::packages'
+  include 'oddjob'
+  include 'oddjob::mkhomedir'
+
+  package {
+    'samba-common-tools': ensure => $samba_ensure;
+    'realmd':             ensure => $realmd_ensure;
+    'adcli':              ensure => $adcli_ensure;
+  }
+
 
   # convert the hash into a string
   $expanded_options = simplib::hash_to_opts(
@@ -77,10 +86,9 @@ class simp_ad::client::install (
   if $ensure == 'present' {
     unless $facts['active_directory'] {
       exec { 'realm join':
-        command   => strip("realm join --unattended ${expanded_options}"),
+        command   => strip("realm join --unattended ${server} ${expanded_options}"),
         logoutput => true,
         path      => ['/sbin','/usr/sbin'],
-        require   => Class['simp_ad::client::packages']
       }
     }
   }
@@ -89,7 +97,6 @@ class simp_ad::client::install (
       command   => 'realm leave --unattended',
       logoutput => true,
       path      => ['/sbin','/usr/sbin'],
-      require   => Class['simp_ad::client::packages'],
     }
   }
 }

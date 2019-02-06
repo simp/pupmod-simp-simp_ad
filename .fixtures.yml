@@ -1,5 +1,7 @@
 ---
 fixtures:
   repositories:
+    oddjob: https://github.com/simp/pupmod-simp-oddjob
+    ruby_task_helper: https://github.com/puppetlabs/puppetlabs-ruby_task_helper
     simplib: https://github.com/simp/pupmod-simp-simplib
     stdlib: https://github.com/simp/puppetlabs-stdlib

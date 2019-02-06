@@ -5,7 +5,6 @@ Facter.add(:active_directory) do
 
   realm_exec = Facter::Core::Execution.which('realm')
   adcli_exec = Facter::Core::Execution.which('adcli')
-  # require 'pry';binding.pry
 
   # prefer realm, but it's ok if we have to use adcli
   confine do
