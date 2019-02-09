@@ -31,7 +31,7 @@ Facter.add(:active_directory) do
     end
 
     domains[nil] = nil
-    domains.compact
+    domains.select{ |x| ! x.nil? }
   end
 
   def parse_adcli(response)
@@ -41,7 +41,7 @@ Facter.add(:active_directory) do
     response.lines.each do |line|
       case line
       when /^\[\w+\]/
-      when /^\[\computer\]/
+      when /^\[computer\]/
         next
       when /domain-name/
         domain_name = line.strip.split(' = ').last
@@ -54,7 +54,7 @@ Facter.add(:active_directory) do
     end
 
     domains[nil] = nil
-    domains.compact
+    domains.select{ |x| ! x.nil? }
   end
 
   def get_status(realm,adcli)
@@ -85,7 +85,6 @@ Facter.add(:active_directory) do
       first_realm = realm.values.first
     end
 
-    # require 'pry';binding.pry
     out = {}
     out['domain'] = first_realm['domain-name'] || adcli.keys.first
     out['status'] = get_status(first_realm,adcli)
