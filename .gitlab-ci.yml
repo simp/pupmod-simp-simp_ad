@@ -201,34 +201,34 @@ pup6-unit:
 
 # Acceptance Tests
 #-----------------------------------------------------------------------
-
-pup4.10:
-  <<: *pup_4_10
-  <<: *acceptance_tests
-  script:
-    - 'bundle exec rake beaker:suites'
-
-pup4.10-fips:
-  <<: *pup_4_10
-  <<: *acceptance_tests
-  <<: *only_with_SIMP_FULL_MATRIX
-  script:
-    - 'BEAKER_fips=yes bundle exec rake beaker:suites'
-
-pup5.5.7:
-  <<: *pup_5_5_7
-  <<: *acceptance_tests
-  script:
-    - 'bundle exec rake beaker:suites'
-
-pup5.5.7-fips:
-  <<: *pup_5_5_7
-  <<: *acceptance_tests
-  script:
-    - 'BEAKER_fips=yes bundle exec rake beaker:suites'
-
-pup5.5.7-oel:
-  <<: *pup_5_5_7
-  <<: *acceptance_tests
-  script:
-    - 'bundle exec rake beaker:suites[default,oel-combined-x64]'
+#
+# pup4.10:
+#   <<: *pup_4_10
+#   <<: *acceptance_tests
+#   script:
+#     - 'bundle exec rake beaker:suites'
+#
+# pup4.10-fips:
+#   <<: *pup_4_10
+#   <<: *acceptance_tests
+#   <<: *only_with_SIMP_FULL_MATRIX
+#   script:
+#     - 'BEAKER_fips=yes bundle exec rake beaker:suites'
+#
+# pup5.5.7:
+#   <<: *pup_5_5_7
+#   <<: *acceptance_tests
+#   script:
+#     - 'bundle exec rake beaker:suites'
+#
+# pup5.5.7-fips:
+#   <<: *pup_5_5_7
+#   <<: *acceptance_tests
+#   script:
+#     - 'BEAKER_fips=yes bundle exec rake beaker:suites'
+#
+# pup5.5.7-oel:
+#   <<: *pup_5_5_7
+#   <<: *acceptance_tests
+#   script:
+#     - 'bundle exec rake beaker:suites[default,oel-combined-x64]'
