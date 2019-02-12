@@ -35,11 +35,23 @@ remove hosts from an IPA domain.
 
 ## Usage
 
-The ``simp_ad`` class is a just a placeholder for now.
+There are no puppet classes in this module yet. It only contains tasks.
 
-``simp_ad::client::install`` and related parameters will run ``ipa-client-install`` on systems if it needs it. You can either use discovery
-(provided you have DNS set up correctly) or manually set all the parameters
-required. See the reference material for further documentation.
+### Tasks
+
+Join a domain using `realm`:
+
+```shell
+bolt task run simp_ad::join --nodes <nodes> server=ad.example.com stdin_password=admin_password options='--verbose'
+```
+
+Other options can be added to the `options` parameter, like `options='--automatic-id-mapping=no --verbose'`
+
+Leave a domain:
+
+```shell
+bolt task run simp_ad::leave --nodes <nodes> domain=<domain> options='--automatic-id-mapping=no --verbose'
+```
 
 ## Development
 

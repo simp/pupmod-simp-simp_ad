@@ -2,15 +2,15 @@
   "description": "Join nodes to an AD domain using realm join",
   "parameters": {
     "server": {
-      "description": "IPA server",
-      "type": "Simplib::Host"
+      "description": "The domain controlling IPA server tyhat the hosts will be joined to",
+      "type": "String"
     },
     "stdin_password": {
-      "description": "Password for authorization to the IPA server",
+      "description": "Password used for authorization to the IPA server",
       "type": "Optional[String]"
     },
     "options": {
-      "description": "Other command line options from `realm join`, specified as an argument string",
+      "description": "Other command line options from `realm join`, specified as an argument string. For example: `--verbose`.",
       "type": "Optional[String]"
     }
   },

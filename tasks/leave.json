@@ -6,7 +6,7 @@
       "type": "Optional[String]"
     },
     "options": {
-      "description": "Other command line options from `realm leave`, specified as an arguments string",
+      "description": "Other command line options from `realm leave`, specified as an arguments string. For example: `--verbose`.",
       "type": "Optional[String]"
     }
   },
