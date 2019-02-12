@@ -45,13 +45,65 @@ Join a domain using `realm`:
 bolt task run simp_ad::join --nodes <nodes> server=ad.example.com stdin_password=admin_password options='--verbose'
 ```
 
-Other options can be added to the `options` parameter, like `options='--automatic-id-mapping=no --verbose'`
+Other options can be added to the `options` parameter, like
+`options='--automatic-id-mapping=no --verbose'`. `stdin_password` allows the
+password prompt to be skipped, if desired.
 
 Leave a domain:
 
 ```shell
 bolt task run simp_ad::leave --nodes <nodes> domain=<domain> options='--automatic-id-mapping=no --verbose'
 ```
+
+Tasks are also available from the [Puppet Enterprise console](https://puppet.com/docs/pe/2018.1/running_tasks.html).
+
+### Facts
+
+This module includes an `active_directory` fact which can be used to get the
+domain connection status of nodes. It contains all output from
+`adcli info <domain>` and `realm list`, if present, parsed into a structured
+fact. It should look like this, for a domain called `test.case` on an EL7
+machine with `realmd` and `adcli` installed:
+
+```yaml
+---
+domain: test.case
+status: connected
+realm:
+  test.case:
+    client-software: sssd
+    configured: kerberos-member
+    domain-name: test.case
+    login-formats: "%U@test.case"
+    login-policy: allow-realm-logins
+    realm-name: TEST.CASE
+    required-package:
+    - oddjob
+    - oddjob-mkhomedir
+    - sssd
+    - adcli
+    - samba-common-tools
+    server-software: active-directory
+    type: kerberos
+adcli:
+  test.case:
+    computer-site: Default-First-Site-Name
+    domain-controller: ad.test.case
+    domain-controller-flags: pdc gc ldap ds kdc timeserv closest writable good-timeserv
+      full-secret ads-web
+    domain-controller-site: Default-First-Site-Name
+    domain-controller-usable: 'yes'
+    domain-controllers: ad.test.case
+    domain-forest: test.case
+    domain-short: TEST
+```
+
+### Tips
+
+It is possible to use facts, such as the `domain` fact, with tasks if you use
+the Puppet Enterprise console or a Puppet
+[plan](https://puppet.com/docs/bolt/1.x/writing_tasks_and_plans.html). This
+would allow for less runtime configuration of the tasks.
 
 ## Development
 
