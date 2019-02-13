@@ -31,7 +31,7 @@ If you find any issues, they may be submitted to our [bug tracker](https://simp-
 ### What simp_ad affects
 
 The ``simp_ad`` module is quite minimal at the moment, it can only join and
-remove hosts from an IPA domain.
+remove hosts from an AD domain.
 
 ## Usage
 

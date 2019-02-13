@@ -22,13 +22,13 @@ Join nodes to an AD domain using realm join
 
 Data type: `String`
 
-The domain controlling IPA server tyhat the hosts will be joined to
+The domain controlling AD server tyhat the hosts will be joined to
 
 ##### `stdin_password`
 
 Data type: `Optional[String]`
 
-Password used for authorization to the IPA server
+Password used for authorization to the AD server
 
 ##### `options`
 

@@ -2,11 +2,11 @@
   "description": "Join nodes to an AD domain using realm join",
   "parameters": {
     "server": {
-      "description": "The domain controlling IPA server tyhat the hosts will be joined to",
+      "description": "The domain controlling AD server that the hosts will be joined to",
       "type": "String"
     },
     "stdin_password": {
-      "description": "Password used for authorization to the IPA server",
+      "description": "Password used for authorization to the AD server",
       "type": "Optional[String]"
     },
     "options": {
